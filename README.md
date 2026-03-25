@@ -16,7 +16,7 @@ The **Embrace** page lets you add good habits with a category, frequency (which 
 
 The **Kick** page is for bad habits. Every habit gets a live timer showing how long you've been sober. If the habit has a financial cost (like smoking or takeaways) it also shows you how much money you've saved, and converts it to another currency using the Frankfurter API. For habits like laziness or procrastination you can just leave the cost blank and it only shows the clock.
 
-If you relapse and reset the timer, the app forces you to write a short reflection first — what triggered it and how you feel. I thought this was a nice touch based on stuff I read about habit formation.
+If you relapse and reset the timer, the app forces you to write a short reflection first, what triggered it and how you feel. I thought this was a nice touch based on stuff I read about habit formation.
 
 All data is saved to localStorage so nothing gets lost when you close the browser, and nothing is sent to any server.
 
@@ -98,7 +98,7 @@ User input is sanitised before being inserted into the DOM to prevent XSS issues
 
 The sobriety clock was trickier than expected. I initially had a separate `setInterval` for each habit card which caused performance issues when there were multiple habits. Fixed it by using one shared interval that loops through all habits at once.
 
-The timezone offset for the datetime input was also annoying — JavaScript's `toISOString()` always returns UTC so I had to subtract `getTimezoneOffset()` to get the correct local time in the input field.
+The timezone offset for the datetime input was also annoying,JavaScript's `toISOString()` always returns UTC so I had to subtract `getTimezoneOffset()` to get the correct local time in the input field.
 
 I also had to think carefully about habits that have no cost (like procrastination). Originally the savings row showed $0.00 for these which looked weird, so I made the cost optional and only show the savings section when there's an actual cost entered.
 
@@ -125,6 +125,6 @@ I also had to think carefully about habits that have no cost (like procrastinati
 
 ## Author
 
-**[Your Name]**
-Student ID: [Your ID]
-[Your Course / Module Name]
+**[Honnete Nishimwe]**
+Student EMAIL: [h.nishimwe@alustudent.com]
+[Software Engineering / Web Infrastructure]
