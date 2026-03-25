@@ -15,6 +15,7 @@
 
 <div class="app-shell">
 
+  <!-- sidebar -->
   <aside class="sidebar" id="sidebar">
 
     <div class="sidebar-logo">
@@ -45,10 +46,10 @@
 
   </aside>
 
-       <!--  MAIN — -->
+  <!-- main content area - pages switch here -->
   <main class="main-content">
 
-         <!-- HOME PAGE -->
+    <!-- HOME page -->
     <div class="page active" id="page-home">
 
       <header class="page-header">
@@ -63,7 +64,7 @@
         </div>
       </header>
 
-      <!-- Row 1 about balance score, Money Saved, and bEst Streak -->
+      <!-- Row 1: Balance Score (wide) + Money Saved + Best Streak -->
       <div class="home-row-1">
 
         <div class="card balance-card">
@@ -109,7 +110,7 @@
 
       </div>
 
-      <!-- Row 2 about Good count, Bad count, and Sobriety Timers -->
+      <!-- Row 2: Good count + Bad count + Sobriety Timers -->
       <div class="home-row-2">
 
         <div class="card count-card green-border">
@@ -140,7 +141,7 @@
     </div><!-- /page-home -->
 
 
-         <!-- EMBRACE dashboard PAGE -->
+    <!-- EMBRACE page - for good habits -->
     <div class="page" id="page-embrace">
 
       <header class="page-header">
@@ -272,10 +273,10 @@
         </div>
       </div>
 
-    </div>
+    </div><!-- /page-embrace -->
 
-    
-         <!-- KICK dashboard PAGE -->
+
+    <!-- KICK page - for bad habits -->
     <div class="page" id="page-kick">
 
       <header class="page-header">
@@ -297,15 +298,15 @@
             <label>Category</label>
             <select id="kCategory">
               <option value="health">Health</option>
-              <option value="sports"> Sports</option>
+              <option value="sports">Sports</option>
               <option value="finance">Finance</option>
-              <option value="personal"> Personal Development</option>
-              <option value="mental"> Mental Wellness</option>
-              <option value="social"> Social</option>
-              <option value="productivity"> Productivity</option>
-              <option value="nutrition"> Nutrition</option>
-              <option value="sleep"> Sleep</option>
-              <option value="creativity"> Creativity</option>
+              <option value="personal">Personal Development</option>
+              <option value="mental">Mental Wellness</option>
+              <option value="social">Social</option>
+              <option value="productivity">Productivity</option>
+              <option value="nutrition">Nutrition</option>
+              <option value="sleep">Sleep</option>
+              <option value="creativity">Creativity</option>
             </select>
           </div>
         </div>
@@ -321,7 +322,7 @@
           </div>
         </div>
 
-        <!-- Currency fields will  only shown when a weekly cost is entered -->
+        <!-- Currency fields — only shown when a weekly cost is entered -->
         <div class="currency-fields hidden" id="currencyFields">
           <div class="form-row">
             <div class="form-group">
@@ -395,13 +396,13 @@
         </div>
       </div>
 
-    </div>
+    </div><!-- /page-kick -->
 
   </main>
 
 </div>
 
-<!-- Reflection Modal -->
+<!-- reflection modal - shows before timer reset -->
 <div class="modal-backdrop" id="reflectionModal">
   <div class="modal">
     <p class="modal-emoji">⚠️</p>
