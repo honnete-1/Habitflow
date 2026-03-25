@@ -9,6 +9,7 @@ var appState = {
 };
 
 var STORAGE_KEY = "habitflow_v2";
+
 // save to localStorage
 function saveState() {
   try {
@@ -32,8 +33,8 @@ function loadState() {
   }
 }
 
-// gEnerate a simple unique id for each habit
-// learned this trick from stackoverflow - combines timestamp + random string
+// generate a simple unique id for each habit
+// learned this trick from stackoverflow which combines timestamp + random string
 function uid() {
   return Date.now() + "-" + Math.random().toString(36).slice(2, 6);
 }
@@ -52,7 +53,7 @@ function pad2(n) {
   return String(n).padStart(2, "0");
 }
 
-// this took me a while to figure out - calculating days/hours/mins/secs from a date
+// this actually took me a while to figure out, calculating days/hours/mins/secs from a date
 function elapsedSince(isoDate) {
   var diff = Date.now() - new Date(isoDate).getTime();
   if (diff < 0) diff = 0;
@@ -71,14 +72,14 @@ function clockStr(isoDate) {
   return pad2(t.days) + "d " + pad2(t.hours) + "h " + pad2(t.minutes) + "m " + pad2(t.seconds) + "s";
 }
 
-// calculate how much money the user saved based on days clean and weekly cost
+// I calculated how much money the user saved based on days clean and weekly cost
 function calcSavings(habit) {
   var t = elapsedSince(habit.lastRelapse);
   var weeks = t.days / 7;
   return Math.max(0, weeks * habit.weeklyCost);
 }
 
-// format numbers as currency using built-in JS Intl API
+// formats numbers as currency using built-in JS Intl API
 function fmt(amount, currency) {
   if (!currency) currency = "USD";
   return new Intl.NumberFormat("en-US", {
@@ -88,8 +89,8 @@ function fmt(amount, currency) {
   }).format(amount);
 }
 
-// security thing - escape user input before putting it into innerHTML
-// learnt that otherwise someone could type <script> tags and break stuff
+// this is security thing to escape user input before putting it into innerHTML
+// because I learnt that,someone could type <script> tags and break stuff
 function escHtml(str) {
   return String(str)
     .replace(/&/g, "&amp;")
@@ -99,9 +100,7 @@ function escHtml(str) {
     .replace(/'/g, "&#039;");
 }
 
-// TOAst NotiFicaToions 
-// little popup messages at the bottom right
-
+//  toast notification which is little popup messages at the bottom right
 var toastIcons = {
   success: "fa-circle-check",
   error: "fa-circle-xmark",
@@ -127,16 +126,19 @@ function showToast(msg, type, duration) {
   }, duration);
 }
 
-// I Used USDA FOOD API 
-// This API gave me real nutrition data (calories, protein etc)
+
+// I used USDA FOOD API 
+// This API gives me real nutrition data (calories, protein etc)
+
+async function verifyNutrition(query) {
   if (!query.trim()) {
     showToast("Type a food name first.", "warning");
     return;
   }
 
-  let panel = document.getElementById("nutritionPanel");
-  let grid = document.getElementById("nutritionGrid");
-  let nameEl = document.getElementById("nutFoodName");
+  var panel = document.getElementById("nutritionPanel");
+  var grid = document.getElementById("nutritionGrid");
+  var nameEl = document.getElementById("nutFoodName");
 
   // show loading state while we wait for API
   panel.classList.add("visible");
@@ -147,14 +149,14 @@ function showToast(msg, type, duration) {
   `;
   nameEl.textContent = "";
 
-  // build the URL with query params
-  let url = new URL(APP_CONFIG.USDA_BASE_URL);
+  // build the URL with query 
+  var url = new URL(APP_CONFIG.USDA_BASE_URL);
   url.searchParams.set("query", query);
   url.searchParams.set("api_key", APP_CONFIG.USDA_API_KEY);
   url.searchParams.set("pageSize", "1"); // only need the top result
 
   try {
-    let resp = await fetch(url.toString());
+    var resp = await fetch(url.toString());
 
     if (!resp.ok) {
       throw new Error("API returned status " + resp.status);
@@ -205,7 +207,8 @@ function showToast(msg, type, duration) {
 }
 
 
-// I used FRANKFURTER CURRENCY API Free API for exchange rates, no key needed
+// I used FRANKFURTER CURRENCY API which is Free API for exchange rates, no key needed
+// Used to show savings in a different currency
 var rateCache = {};
 var CACHE_DURATION = 30 * 60 * 1000; // 30 minutes in ms
 
@@ -250,15 +253,15 @@ async function fetchExchangeRate(from, to) {
 }
 
 
-// FoRm Tracking
+// form tracking
 // need to track selected days and icon outside the form since they use custom buttons
 
 var selectedDays = [];
 var selectedIcon = "fa-dumbbell";
-var pendingResetId = null; 
+var pendingResetId = null; // which kick habit is waiting to be reset
 
 
-//  NAVIGATION 
+//  Navigation
 // switches between Home, Embrace, and Kick pages
 
 function navigateTo(pageId) {
@@ -277,7 +280,7 @@ function navigateTo(pageId) {
 }
 
 
-//  EMBRACE (GOOD HABITS) 
+//  embrace (good habits) 
 
 function addEmbraceHabit() {
   var name = document.getElementById("eName").value.trim();
@@ -297,7 +300,7 @@ function addEmbraceHabit() {
     id: uid(),
     name: name,
     category: category,
-    days: selectedDays.slice(), // copy the array
+    days: selectedDays.slice(), 
     icon: selectedIcon,
     todayDone: false,
     streak: 0,
@@ -409,7 +412,7 @@ function renderEmbraceHabits() {
 }
 
 
-// KICK (BAD HABITS)
+// ---- KICK (BAD HABITS) ----
 
 async function addKickHabit() {
   var name = document.getElementById("kName").value.trim();
@@ -419,9 +422,9 @@ async function addKickHabit() {
   var why = document.getElementById("kWhy").value.trim();
   var icon = document.getElementById("kIcon").value;
 
-  // cost is optional, if cost it is blank we treat it as 0
-  let weeklyCost = costInput !== "" ? parseFloat(costInput) : 0;
-  let hasCost = weeklyCost > 0;
+  // cost is optional - if blank we treat it as 0
+  var weeklyCost = costInput !== "" ? parseFloat(costInput) : 0;
+  var hasCost = weeklyCost > 0;
 
   if (!name) {
     showToast("Please enter the habit name.", "warning");
@@ -436,13 +439,13 @@ async function addKickHabit() {
     return;
   }
 
-  let currFrom = hasCost ? document.getElementById("kCurrencyFrom").value : "USD";
-  let currTo = hasCost ? document.getElementById("kCurrencyTo").value : "USD";
+  var currFrom = hasCost ? document.getElementById("kCurrencyFrom").value : "USD";
+  var currTo = hasCost ? document.getElementById("kCurrencyTo").value : "USD";
 
   // only call the currency API if they actually entered a cost
-  let exchangeRate = 1;
+  var exchangeRate = 1;
   if (hasCost && currFrom !== currTo) {
-    let rate = await fetchExchangeRate(currFrom, currTo);
+    var rate = await fetchExchangeRate(currFrom, currTo);
     if (rate !== null) exchangeRate = rate;
   }
 
@@ -523,7 +526,7 @@ function confirmReset() {
   closeModal();
   renderKickHabits();
   updateHome();
-  showToast("Clock reset. You can do this! ", "info", 5000);
+  showToast("Clock reset. You can do this! 💪", "info", 5000);
 }
 
 function closeModal() {
@@ -552,7 +555,7 @@ function renderKickHabits() {
     el.className = "kick-item";
     el.dataset.id = h.id;
 
-    // I configured to only show the savings section if habit has a cost
+    // only show the savings section if habit has a cost
     var savingsSection = "";
     if (hasCost) {
       var convertedHTML = "";
@@ -606,8 +609,7 @@ function renderKickHabits() {
   });
 }
 
-
-// created the Live CLOCK (it updates every second)
+//  LIVe CLOCK (updates every second) 
 setInterval(function() {
   appState.kickHabits.forEach(function(h) {
     var clockEl = document.getElementById("clock-" + h.id);
@@ -631,7 +633,7 @@ setInterval(function() {
 }, 1000);
 
 
-// HOME PAGE 
+//  Home PAGE 
 
 function updateHome() {
   updateBalanceScore();
@@ -764,11 +766,13 @@ function setDefaultRelapseTime() {
   var el = document.getElementById("kLastRelapse");
   var now = new Date();
   // have to adjust for timezone offset otherwise it shows wrong time
-  // Date.getTimezoneOffset() returns minutes, not seconds it actually took me a while to remember that
+  // Date.getTimezoneOffset() returns minutes, not seconds - took me a while to remember that
   var local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
   el.value = local.toISOString().slice(0, 16);
 }
-// EVENT LISTENERS 
+
+
+//  event listeners
 document.querySelectorAll(".nav-item[data-page]").forEach(function(btn) {
   btn.addEventListener("click", function() {
     navigateTo(btn.dataset.page);
@@ -861,6 +865,9 @@ document.getElementById("reflectionModal").addEventListener("click", function(e)
   }
 });
 
+
+// startup
+
 function init() {
   loadState();
   handleDailyReset();
@@ -872,7 +879,7 @@ function init() {
   updateHome();
   updateBadges();
 
-  // this refresh exchange rates for any saved kick habits in the background
+  // refresh exchange rates for any saved kick habits in the background
   appState.kickHabits.forEach(async function(h) {
     if (h.currencyFrom !== h.currencyTo) {
       var rate = await fetchExchangeRate(h.currencyFrom, h.currencyTo);
