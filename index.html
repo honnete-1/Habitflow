@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HabitFlow — Wellness Suite</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="app-shell">
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-logo">
+      <div class="logo-icon-wrap"><i class="fa-solid fa-seedling"></i></div>
+      <span class="logo-name">HabitFlow</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-page="home">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+      </button>
+      <button class="nav-item" data-page="embrace">
+        <i class="fa-solid fa-seedling"></i>
+        <span>Embrace</span>
+        <span class="nav-badge" id="badgeEmbrace">0</span>
+      </button>
+      <button class="nav-item" data-page="kick">
+        <i class="fa-solid fa-fire-flame-curved"></i>
+        <span>Kick</span>
+        <span class="nav-badge nav-badge-red" id="badgeKick">0</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      Stay consistent. <em>You've got this.</em>
+    </div>
+
+  </aside>
+
+       <!--  MAIN — -->
+  <main class="main-content">
+
+         <!-- HOME PAGE -->
+    <div class="page active" id="page-home">
+
+      <header class="page-header">
+        <div>
+          <p class="greeting-chip" id="greetingChip"><i class="fa-solid fa-sun"></i> GOOD MORNING</p>
+          <h1 class="home-title">Welcome to <span class="brand-name">HabitFlow.</span></h1>
+          <p class="home-sub">Build a better you, one day at a time.</p>
+        </div>
+        <div class="date-pill">
+          <i class="fa-regular fa-calendar"></i>
+          <span id="currentDate"></span>
+        </div>
+      </header>
+
+      <!-- Row 1 about balance score, Money Saved, and bEst Streak -->
+      <div class="home-row-1">
+
+        <div class="card balance-card">
+          <div class="balance-header">
+            <div>
+              <p class="card-eyebrow">HABIT BALANCE SCORE</p>
+              <p class="card-hint">Good habits completed today vs total active habits</p>
+            </div>
+            <span class="balance-pct" id="balancePct">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill" style="width:0%"></div>
+          </div>
+          <div class="balance-meta">
+            <span class="bmeta-item">
+              <i class="fa-solid fa-circle-check" style="color:#22c882;"></i>
+              <span id="bCompleted">0</span> completed
+            </span>
+            <span class="bmeta-item">
+              <i class="fa-solid fa-circle" style="color:#cbd5e0;font-size:.5rem;"></i>
+              <span id="bRemaining">0</span> remaining
+            </span>
+            <span class="bmeta-item">
+              <i class="fa-solid fa-layer-group" style="color:#cbd5e0;"></i>
+              <span id="bTotal">0</span> total active
+            </span>
+          </div>
+        </div>
+
+        <div class="card mini-stat-card">
+          <div class="msc-icon green-bg"><i class="fa-solid fa-piggy-bank"></i></div>
+          <p class="msc-label">TOTAL MONEY SAVED</p>
+          <div class="msc-value green-text" id="statMoneySaved">$0.00</div>
+          <p class="msc-hint">From kicking bad habits</p>
+        </div>
+
+        <div class="card mini-stat-card">
+          <div class="msc-icon gold-bg"><i class="fa-solid fa-bolt-lightning"></i></div>
+          <p class="msc-label">CURRENT BEST STREAK</p>
+          <div class="msc-value gold-text" id="statBestStreak">0 days</div>
+          <p class="msc-hint">Keep the momentum going!</p>
+        </div>
+
+      </div>
+
+      <!-- Row 2 about Good count, Bad count, and Sobriety Timers -->
+      <div class="home-row-2">
+
+        <div class="card count-card green-border">
+          <div class="cc-icon green-icon"><i class="fa-solid fa-check"></i></div>
+          <p class="cc-label">GOOD HABITS</p>
+          <div class="cc-value green-text" id="countGood">0</div>
+        </div>
+
+        <div class="card count-card red-border">
+          <div class="cc-icon red-icon"><i class="fa-solid fa-skull-crossbones"></i></div>
+          <p class="cc-label">BAD HABITS</p>
+          <div class="cc-value red-text" id="countBad">0</div>
+        </div>
+
+        <div class="card sobriety-card">
+          <p class="card-eyebrow">
+            <i class="fa-solid fa-hourglass-half"></i>&nbsp; ACTIVE SOBRIETY TIMERS
+          </p>
+          <div id="sobrietyOverview">
+            <p class="sobriety-empty">
+              No bad habits tracked yet. Add one in the
+              <button class="text-link" data-page="kick">Kick</button> tab.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /page-home -->
+
+
+         <!-- EMBRACE dashboard PAGE -->
+    <div class="page" id="page-embrace">
+
+      <header class="page-header">
+        <div>
+          <h1 class="page-title"><i class="fa-solid fa-seedling" style="color:#22c882;"></i> Embrace</h1>
+          <p class="home-sub">Build consistency. Grow every day.</p>
+        </div>
+      </header>
+
+      <div class="card form-card">
+        <p class="form-card-title"><i class="fa-solid fa-plus-circle"></i> Add a Good Habit</p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Habit Name</label>
+            <input id="eName" type="text" placeholder="e.g. Drink 2L water" />
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select id="eCategory">
+              <option value="health">🩺 Health</option>
+              <option value="sports">🏋️ Sports</option>
+              <option value="finance">📈 Finance</option>
+              <option value="personal">📚 Personal Development</option>
+              <option value="mental">🧠 Mental Wellness</option>
+              <option value="social">🤝 Social</option>
+              <option value="productivity">⚡ Productivity</option>
+              <option value="nutrition">🥗 Nutrition</option>
+              <option value="sleep">😴 Sleep</option>
+              <option value="creativity">🎨 Creativity</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Frequency</label>
+          <div class="day-selector" id="eDays">
+            <button type="button" class="day-btn" data-day="Mon">M</button>
+            <button type="button" class="day-btn" data-day="Tue">T</button>
+            <button type="button" class="day-btn" data-day="Wed">W</button>
+            <button type="button" class="day-btn" data-day="Thu">T</button>
+            <button type="button" class="day-btn" data-day="Fri">F</button>
+            <button type="button" class="day-btn" data-day="Sat">S</button>
+            <button type="button" class="day-btn" data-day="Sun">S</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Icon</label>
+          <div class="icon-picker" id="eIconPicker">
+            <!-- Health -->
+            <button type="button" class="icon-opt" data-icon="fa-heart"            title="Heart"><i class="fa-solid fa-heart"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-droplet"          title="Water"><i class="fa-solid fa-droplet"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-apple-whole"      title="Eat healthy"><i class="fa-solid fa-apple-whole"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-pills"            title="Medication"><i class="fa-solid fa-pills"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-stethoscope"      title="Check-up"><i class="fa-solid fa-stethoscope"></i></button>
+            <!-- Sports -->
+            <button type="button" class="icon-opt selected" data-icon="fa-dumbbell" title="Weights"><i class="fa-solid fa-dumbbell"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-person-running"   title="Run"><i class="fa-solid fa-person-running"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-bicycle"          title="Cycling"><i class="fa-solid fa-bicycle"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-person-swimming"  title="Swim"><i class="fa-solid fa-person-swimming"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-football"         title="Sport"><i class="fa-solid fa-football"></i></button>
+            <!-- Finance -->
+            <button type="button" class="icon-opt" data-icon="fa-chart-line"       title="Investing"><i class="fa-solid fa-chart-line"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-piggy-bank"       title="Save money"><i class="fa-solid fa-piggy-bank"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-wallet"           title="Budget"><i class="fa-solid fa-wallet"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-coins"            title="Coins"><i class="fa-solid fa-coins"></i></button>
+            <!-- Personal Development -->
+            <button type="button" class="icon-opt" data-icon="fa-book"             title="Reading"><i class="fa-solid fa-book"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-book-open"        title="Study"><i class="fa-solid fa-book-open"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-graduation-cap"   title="Learning"><i class="fa-solid fa-graduation-cap"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-pen"              title="Journaling"><i class="fa-solid fa-pen"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-language"         title="Language"><i class="fa-solid fa-language"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-podcast"          title="Podcast"><i class="fa-solid fa-podcast"></i></button>
+            <!-- Mental Wellness -->
+            <button type="button" class="icon-opt" data-icon="fa-brain"            title="Mindfulness"><i class="fa-solid fa-brain"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-spa"              title="Meditation"><i class="fa-solid fa-spa"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-face-smile"       title="Gratitude"><i class="fa-solid fa-face-smile"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-bed"              title="Sleep"><i class="fa-solid fa-bed"></i></button>
+            <!-- Social -->
+            <button type="button" class="icon-opt" data-icon="fa-people-group"     title="Community"><i class="fa-solid fa-people-group"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-handshake"        title="Networking"><i class="fa-solid fa-handshake"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-phone"            title="Call family"><i class="fa-solid fa-phone"></i></button>
+            <!-- Productivity -->
+            <button type="button" class="icon-opt" data-icon="fa-list-check"       title="Tasks"><i class="fa-solid fa-list-check"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-clock"            title="Time-block"><i class="fa-solid fa-clock"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-bolt"             title="Deep work"><i class="fa-solid fa-bolt"></i></button>
+            <!-- Nutrition -->
+            <button type="button" class="icon-opt" data-icon="fa-bowl-food"        title="Meal prep"><i class="fa-solid fa-bowl-food"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-mug-hot"          title="Tea / no coffee"><i class="fa-solid fa-mug-hot"></i></button>
+            <!-- Creativity -->
+            <button type="button" class="icon-opt" data-icon="fa-paintbrush"       title="Art"><i class="fa-solid fa-paintbrush"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-music"            title="Music"><i class="fa-solid fa-music"></i></button>
+            <button type="button" class="icon-opt" data-icon="fa-camera"           title="Photography"><i class="fa-solid fa-camera"></i></button>
+          </div>
+        </div>
+
+        <!-- USDA Nutrition Verify -->
+        <div class="form-group">
+          <label>Verify Nutrition via USDA <span class="label-hint">(optional — for food habits)</span></label>
+          <div class="input-row">
+            <input id="eNutritionQuery" type="text" placeholder="e.g. chicken breast, oats…" />
+            <button class="btn btn-outline" id="btnVerifyNutrition" type="button">
+              <i class="fa-solid fa-database"></i> Verify
+            </button>
+          </div>
+          <div class="nutrition-panel" id="nutritionPanel">
+            <p class="nut-title">USDA FoodData Central</p>
+            <p class="nut-food-name" id="nutFoodName"></p>
+            <div class="nut-grid" id="nutritionGrid"></div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-green" id="btnAddEmbrace" type="button">
+            <i class="fa-solid fa-plus"></i> Add Habit
+          </button>
+          <button class="btn btn-ghost" id="btnClearEmbrace" type="button">Clear</button>
+        </div>
+      </div>
+
+      <div class="list-area">
+        <p class="list-label">Your Good Habits</p>
+        <div id="embraceList">
+          <div class="empty-state" id="embraceEmpty">
+            <i class="fa-regular fa-circle-check"></i>
+            <p>No good habits yet.<br>Add one above to start your streak!</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    
+         <!-- KICK dashboard PAGE -->
+    <div class="page" id="page-kick">
+
+      <header class="page-header">
+        <div>
+          <h1 class="page-title"><i class="fa-solid fa-fire-flame-curved" style="color:#f96060;"></i> Kick</h1>
+          <p class="home-sub">Track relapses. Break free. Savings tracked only when there's a cost.</p>
+        </div>
+      </header>
+
+      <div class="card form-card">
+        <p class="form-card-title"><i class="fa-solid fa-plus-circle"></i> Track a Bad Habit</p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Habit to Kick</label>
+            <input id="kName" type="text" placeholder="e.g. Smoking, Takeaway food" />
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select id="kCategory">
+              <option value="health">Health</option>
+              <option value="sports"> Sports</option>
+              <option value="finance">Finance</option>
+              <option value="personal"> Personal Development</option>
+              <option value="mental"> Mental Wellness</option>
+              <option value="social"> Social</option>
+              <option value="productivity"> Productivity</option>
+              <option value="nutrition"> Nutrition</option>
+              <option value="sleep"> Sleep</option>
+              <option value="creativity"> Creativity</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Weekly Cost <span class="label-optional">(optional — leave blank if no cost)</span></label>
+            <input id="kCost" type="number" min="0" step="0.5" placeholder="e.g. 35.00 — or leave blank" />
+          </div>
+          <div class="form-group">
+            <label>Last Relapse Date &amp; Time</label>
+            <input id="kLastRelapse" type="datetime-local" />
+          </div>
+        </div>
+
+        <!-- Currency fields will  only shown when a weekly cost is entered -->
+        <div class="currency-fields hidden" id="currencyFields">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Cost In</label>
+              <select id="kCurrencyFrom">
+                <option value="USD" selected>USD 🇺🇸</option>
+                <option value="GBP">GBP 🇬🇧</option>
+                <option value="EUR">EUR 🇪🇺</option>
+                <option value="RWF">RWF 🇷🇼</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Show Equivalent In</label>
+              <select id="kCurrencyTo">
+                <option value="EUR" selected>EUR 🇪🇺</option>
+                <option value="USD">USD 🇺🇸</option>
+                <option value="GBP">GBP 🇬🇧</option>
+                <option value="JPY">JPY 🇯🇵</option>
+                <option value="CAD">CAD 🇨🇦</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Your "Why" — Motivation</label>
+          <textarea id="kWhy" rows="2" placeholder="Why do you want to quit? Be specific…"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Icon</label>
+            <select id="kIcon">
+              <option value="fa-cigarette">🚬 Cigarette</option>
+              <option value="fa-wine-glass">🍷 Alcohol</option>
+              <option value="fa-burger">🍔 Junk Food</option>
+              <option value="fa-gamepad">🎮 Gaming</option>
+              <option value="fa-mobile-screen">📱 Phone / Social Media</option>
+              <option value="fa-cart-shopping">🛍️ Impulse Buying</option>
+              <option value="fa-mug-saucer">☕ Excess Coffee</option>
+              <option value="fa-bed">😴 Laziness</option>
+              <option value="fa-clock">⏰ Procrastination</option>
+              <option value="fa-hand-scissors">💅 Nail Biting</option>
+              <option value="fa-tv">📺 Binge Watching</option>
+              <option value="fa-face-angry">😤 Anger / Outbursts</option>
+              <option value="fa-cookie">🍪 Sugar / Snacking</option>
+              <option value="fa-sack-dollar">💸 Overspending</option>
+              <option value="fa-moon">🌙 Late Night Habits</option>
+              <option value="fa-comment-slash">🤐 Negative Self-Talk</option>
+              <option value="fa-people-arrows">😬 People Pleasing</option>
+              <option value="fa-skull-crossbones">💀 Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-red" id="btnAddKick" type="button">
+            <i class="fa-solid fa-plus"></i> Track Habit
+          </button>
+          <button class="btn btn-ghost" id="btnClearKick" type="button">Clear</button>
+        </div>
+      </div>
+
+      <div class="list-area">
+        <p class="list-label">Your Bad Habits</p>
+        <div id="kickList">
+          <div class="empty-state" id="kickEmpty">
+            <i class="fa-regular fa-hand"></i>
+            <p>No bad habits tracked yet.<br>Add one above to start your sobriety clock!</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+<!-- Reflection Modal -->
+<div class="modal-backdrop" id="reflectionModal">
+  <div class="modal">
+    <p class="modal-emoji">⚠️</p>
+    <h2>Trigger Reflection Required</h2>
+    <p class="modal-desc">Before resetting your sobriety clock, reflect on what happened. This helps prevent future relapses.</p>
+    <div class="form-group">
+      <label>What triggered this relapse?</label>
+      <textarea id="reflectionText" rows="3" placeholder="e.g. Stress at work, social pressure…"></textarea>
+    </div>
+    <div class="form-group" style="margin-top:12px;">
+      <label>How do you feel about it?</label>
+      <textarea id="reflectionFeeling" rows="2" placeholder="e.g. Disappointed but determined…"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="btnCancelReset">Cancel</button>
+      <button class="btn btn-red" id="btnConfirmReset">
+        <i class="fa-solid fa-rotate-right"></i> Reset Clock
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="toastContainer"></div>
+
+<script src="config.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
