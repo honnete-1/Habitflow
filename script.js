@@ -1,3 +1,4 @@
+// script.js - main logic for HabitFlow app
 // I decided to keep everything in one file since the app is not that big
 
 // all my data lives here, i save it to localStorage whenever something changes
@@ -34,7 +35,7 @@ function loadState() {
 }
 
 // generate a simple unique id for each habit
-// learned this trick from stackoverflow which combines timestamp + random string
+// learned this trick from stackoverflow - combines timestamp + random string
 function uid() {
   return Date.now() + "-" + Math.random().toString(36).slice(2, 6);
 }
@@ -53,7 +54,7 @@ function pad2(n) {
   return String(n).padStart(2, "0");
 }
 
-// this actually took me a while to figure out, calculating days/hours/mins/secs from a date
+// this took me a while to figure out - calculating days/hours/mins/secs from a date
 function elapsedSince(isoDate) {
   var diff = Date.now() - new Date(isoDate).getTime();
   if (diff < 0) diff = 0;
@@ -72,14 +73,16 @@ function clockStr(isoDate) {
   return pad2(t.days) + "d " + pad2(t.hours) + "h " + pad2(t.minutes) + "m " + pad2(t.seconds) + "s";
 }
 
-// I calculated how much money the user saved based on days clean and weekly cost
+// calculate how much money the user saved based on time clean and weekly cost
+// using raw milliseconds so it works even within the first day (not just whole days)
 function calcSavings(habit) {
-  var t = elapsedSince(habit.lastRelapse);
-  var weeks = t.days / 7;
+  var diff = Date.now() - new Date(habit.lastRelapse).getTime();
+  if (diff < 0) diff = 0;
+  var weeks = diff / (1000 * 60 * 60 * 24 * 7); // ms to weeks
   return Math.max(0, weeks * habit.weeklyCost);
 }
 
-// formats numbers as currency using built-in JS Intl API
+// format numbers as currency using built-in JS Intl API
 function fmt(amount, currency) {
   if (!currency) currency = "USD";
   return new Intl.NumberFormat("en-US", {
@@ -89,8 +92,8 @@ function fmt(amount, currency) {
   }).format(amount);
 }
 
-// this is security thing to escape user input before putting it into innerHTML
-// because I learnt that,someone could type <script> tags and break stuff
+// security thing - escape user input before putting it into innerHTML
+// otherwise someone could type <script> tags and break stuff
 function escHtml(str) {
   return String(str)
     .replace(/&/g, "&amp;")
@@ -100,7 +103,9 @@ function escHtml(str) {
     .replace(/'/g, "&#039;");
 }
 
-//  toast notification which is little popup messages at the bottom right
+// ---- TOAST NOTIFICATIONS ----
+// little popup messages at the bottom right
+
 var toastIcons = {
   success: "fa-circle-check",
   error: "fa-circle-xmark",
@@ -127,8 +132,10 @@ function showToast(msg, type, duration) {
 }
 
 
-// I used USDA FOOD API 
-// This API gives me real nutrition data (calories, protein etc)
+// ---- USDA FOOD API ----
+// This API gives us real nutrition data (calories, protein etc)
+// Docs: https://fdc.nal.usda.gov/fdc-app.html
+// You need an API key from: https://fdc.nal.usda.gov/api-key-signup.html
 
 async function verifyNutrition(query) {
   if (!query.trim()) {
@@ -149,7 +156,7 @@ async function verifyNutrition(query) {
   `;
   nameEl.textContent = "";
 
-  // build the URL with query 
+  // build the URL with query params
   var url = new URL(APP_CONFIG.USDA_BASE_URL);
   url.searchParams.set("query", query);
   url.searchParams.set("api_key", APP_CONFIG.USDA_API_KEY);
@@ -207,8 +214,13 @@ async function verifyNutrition(query) {
 }
 
 
-// I used FRANKFURTER CURRENCY API which is Free API for exchange rates, no key needed
+// ---- FRANKFURTER CURRENCY API ----
+// Free API for exchange rates, no key needed
 // Used to show savings in a different currency
+// Docs: https://www.frankfurter.app/docs/
+
+// simple cache so we dont call the API every second
+// stores rates like { "USD-EUR": { rate: 0.92, time: 1234567 } }
 var rateCache = {};
 var CACHE_DURATION = 30 * 60 * 1000; // 30 minutes in ms
 
@@ -246,22 +258,24 @@ async function fetchExchangeRate(from, to) {
     return data.rates[to];
 
   } catch (err) {
+    // silently fall back to no conversion - habit still gets added
+    // showing an error here confused users into thinking the habit wasn't saved
     console.error("Frankfurter API error:", err);
-    showToast("Data Unavailable — currency conversion failed", "error");
     return null;
   }
 }
 
 
-// form tracking
+// ---- FORM TRACKING ----
 // need to track selected days and icon outside the form since they use custom buttons
 
 var selectedDays = [];
 var selectedIcon = "fa-dumbbell";
 var pendingResetId = null; // which kick habit is waiting to be reset
+var isAddingKick = false;  // lock to stop double-clicks during async API call
 
 
-//  Navigation
+// ---- NAVIGATION ----
 // switches between Home, Embrace, and Kick pages
 
 function navigateTo(pageId) {
@@ -280,7 +294,7 @@ function navigateTo(pageId) {
 }
 
 
-//  embrace (good habits) 
+// ---- EMBRACE (GOOD HABITS) ----
 
 function addEmbraceHabit() {
   var name = document.getElementById("eName").value.trim();
@@ -300,7 +314,7 @@ function addEmbraceHabit() {
     id: uid(),
     name: name,
     category: category,
-    days: selectedDays.slice(), 
+    days: selectedDays.slice(), // copy the array
     icon: selectedIcon,
     todayDone: false,
     streak: 0,
@@ -415,6 +429,14 @@ function renderEmbraceHabits() {
 // ---- KICK (BAD HABITS) ----
 
 async function addKickHabit() {
+  // prevent double-submission while waiting for the exchange rate API
+  if (isAddingKick) return;
+  isAddingKick = true;
+
+  var btn = document.getElementById("btnAddKick");
+  btn.disabled = true;
+  btn.textContent = "Adding…";
+
   var name = document.getElementById("kName").value.trim();
   var category = document.getElementById("kCategory").value;
   var costInput = document.getElementById("kCost").value;
@@ -428,14 +450,23 @@ async function addKickHabit() {
 
   if (!name) {
     showToast("Please enter the habit name.", "warning");
+    isAddingKick = false;
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-plus"></i> Track Habit';
     return;
   }
   if (!lastRelapse) {
     showToast("Please set when you last relapsed.", "warning");
+    isAddingKick = false;
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-plus"></i> Track Habit';
     return;
   }
   if (costInput !== "" && (isNaN(weeklyCost) || weeklyCost < 0)) {
     showToast("Enter a valid cost amount.", "warning");
+    isAddingKick = false;
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-plus"></i> Track Habit';
     return;
   }
 
@@ -473,6 +504,12 @@ async function addKickHabit() {
   document.getElementById("kWhy").value = "";
   document.getElementById("currencyFields").classList.add("hidden");
   setDefaultRelapseTime();
+
+  // release the submit lock and restore button
+  isAddingKick = false;
+  var btn = document.getElementById("btnAddKick");
+  btn.disabled = false;
+  btn.innerHTML = '<i class="fa-solid fa-plus"></i> Track Habit';
 
   showToast('"' + name + '" — sobriety clock started! ⏱️', "success");
 }
@@ -609,7 +646,11 @@ function renderKickHabits() {
   });
 }
 
-//  LIVe CLOCK (updates every second) 
+
+// ---- LIVE CLOCK (updates every second) ----
+// this runs all the time and updates the sobriety timers
+// TODO: might be worth pausing this when the page is hidden to save resources
+
 setInterval(function() {
   appState.kickHabits.forEach(function(h) {
     var clockEl = document.getElementById("clock-" + h.id);
@@ -633,7 +674,7 @@ setInterval(function() {
 }, 1000);
 
 
-//  Home PAGE 
+// ---- HOME PAGE ----
 
 function updateHome() {
   updateBalanceScore();
@@ -772,7 +813,9 @@ function setDefaultRelapseTime() {
 }
 
 
-//  event listeners
+// ---- EVENT LISTENERS ----
+
+// sidebar navigation clicks
 document.querySelectorAll(".nav-item[data-page]").forEach(function(btn) {
   btn.addEventListener("click", function() {
     navigateTo(btn.dataset.page);
@@ -866,7 +909,7 @@ document.getElementById("reflectionModal").addEventListener("click", function(e)
 });
 
 
-// startup
+// ---- STARTUP ----
 
 function init() {
   loadState();
