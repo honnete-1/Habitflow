@@ -297,24 +297,36 @@
           <div class="form-group">
             <label>Category</label>
             <select id="kCategory">
-              <option value="health">Health</option>
-              <option value="sports">Sports</option>
-              <option value="finance">Finance</option>
-              <option value="personal">Personal Development</option>
-              <option value="mental">Mental Wellness</option>
-              <option value="social">Social</option>
-              <option value="productivity">Productivity</option>
-              <option value="nutrition">Nutrition</option>
-              <option value="sleep">Sleep</option>
-              <option value="creativity">Creativity</option>
+              <option value="health">🩺 Health</option>
+              <option value="sports">🏋️ Sports</option>
+              <option value="finance">📈 Finance</option>
+              <option value="personal">📚 Personal Development</option>
+              <option value="mental">🧠 Mental Wellness</option>
+              <option value="social">🤝 Social</option>
+              <option value="productivity">⚡ Productivity</option>
+              <option value="nutrition">🥗 Nutrition</option>
+              <option value="sleep">😴 Sleep</option>
+              <option value="creativity">🎨 Creativity</option>
             </select>
           </div>
         </div>
 
-        <div class="form-row">
+        <div class="form-row form-row-3">
           <div class="form-group">
             <label>Weekly Cost <span class="label-optional">(optional — leave blank if no cost)</span></label>
             <input id="kCost" type="number" min="0" step="0.5" placeholder="e.g. 35.00 — or leave blank" />
+          </div>
+          <div class="form-group">
+            <label>Cost Currency</label>
+            <select id="kCurrencyFrom">
+              <option value="USD" selected>USD 🇺🇸</option>
+              <option value="EUR">EUR 🇪🇺</option>
+              <option value="GBP">GBP 🇬🇧</option>
+              <option value="AUD">AUD 🇦🇺</option>
+              <option value="CAD">CAD 🇨🇦</option>
+              <option value="CHF">CHF 🇨🇭</option>
+              <option value="JPY">JPY 🇯🇵</option>
+            </select>
           </div>
           <div class="form-group">
             <label>Last Relapse Date &amp; Time</label>
@@ -322,28 +334,19 @@
           </div>
         </div>
 
-        <!-- Currency fields — only shown when a weekly cost is entered -->
+        <!-- Show Equivalent In — only shown when a cost is entered -->
         <div class="currency-fields hidden" id="currencyFields">
-          <div class="form-row">
-            <div class="form-group">
-              <label>Cost In</label>
-              <select id="kCurrencyFrom">
-                <option value="USD" selected>USD 🇺🇸</option>
-                <option value="GBP">GBP 🇬🇧</option>
-                <option value="EUR">EUR 🇪🇺</option>
-                <option value="RWF">RWF 🇷🇼</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Show Equivalent In</label>
-              <select id="kCurrencyTo">
-                <option value="EUR" selected>EUR 🇪🇺</option>
-                <option value="USD">USD 🇺🇸</option>
-                <option value="GBP">GBP 🇬🇧</option>
-                <option value="JPY">JPY 🇯🇵</option>
-                <option value="CAD">CAD 🇨🇦</option>
-              </select>
-            </div>
+          <div class="form-group">
+            <label>Show Equivalent In <span class="label-optional">(converts your savings to another currency)</span></label>
+            <select id="kCurrencyTo">
+              <option value="EUR" selected>EUR 🇪🇺</option>
+              <option value="USD">USD 🇺🇸</option>
+              <option value="GBP">GBP 🇬🇧</option>
+              <option value="JPY">JPY 🇯🇵</option>
+              <option value="CAD">CAD 🇨🇦</option>
+              <option value="CHF">CHF 🇨🇭</option>
+              <option value="AUD">AUD 🇦🇺</option>
+            </select>
           </div>
         </div>
 

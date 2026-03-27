@@ -160,7 +160,7 @@ async function verifyNutrition(query) {
   var url = new URL(APP_CONFIG.USDA_BASE_URL);
   url.searchParams.set("query", query);
   url.searchParams.set("api_key", APP_CONFIG.USDA_API_KEY);
-  url.searchParams.set("pageSize", "1"); // only need the top result
+  url.searchParams.set("pageSize", "1");
 
   try {
     var resp = await fetch(url.toString());
@@ -470,8 +470,8 @@ async function addKickHabit() {
     return;
   }
 
-  var currFrom = hasCost ? document.getElementById("kCurrencyFrom").value : "USD";
-  var currTo = hasCost ? document.getElementById("kCurrencyTo").value : "USD";
+  var currFrom = document.getElementById("kCurrencyFrom").value; // always read - user picks their currency
+  var currTo = hasCost ? document.getElementById("kCurrencyTo").value : currFrom; // only convert if there's a cost
 
   // only call the currency API if they actually entered a cost
   var exchangeRate = 1;
@@ -883,11 +883,12 @@ document.getElementById("btnClearKick").addEventListener("click", function() {
   document.getElementById("kName").value = "";
   document.getElementById("kCost").value = "";
   document.getElementById("kWhy").value = "";
-  document.getElementById("currencyFields").classList.add("hidden");
+  document.getElementById("currencyFields").classList.add("hidden"); // hide "show equivalent in"
   setDefaultRelapseTime();
 });
 
-// show currency fields only if the user enters a cost
+// show "Show Equivalent In" only when a cost is entered
+// the Cost Currency field is always visible now
 document.getElementById("kCost").addEventListener("input", function(e) {
   var val = parseFloat(e.target.value);
   var fields = document.getElementById("currencyFields");
