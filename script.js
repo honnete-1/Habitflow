@@ -160,11 +160,7 @@ async function verifyNutrition(query) {
   var url = new URL(APP_CONFIG.USDA_BASE_URL);
   url.searchParams.set("query", query);
   url.searchParams.set("api_key", APP_CONFIG.USDA_API_KEY);
-<<<<<<< HEAD
-  url.searchParams.set("pageSize", "1");
-=======
   url.searchParams.set("pageSize", "1"); // only need the top result
->>>>>>> 60528bcb8f03f9dbdb7d21bea3d9be56ba36c543
 
   try {
     var resp = await fetch(url.toString());
@@ -474,13 +470,9 @@ async function addKickHabit() {
     return;
   }
 
-<<<<<<< HEAD
   var currFrom = document.getElementById("kCurrencyFrom").value; // always read - user picks their currency
   var currTo = hasCost ? document.getElementById("kCurrencyTo").value : currFrom; // only convert if there's a cost
-=======
-  var currFrom = hasCost ? document.getElementById("kCurrencyFrom").value : "USD";
-  var currTo = hasCost ? document.getElementById("kCurrencyTo").value : "USD";
->>>>>>> 60528bcb8f03f9dbdb7d21bea3d9be56ba36c543
+  
 
   // only call the currency API if they actually entered a cost
   var exchangeRate = 1;
@@ -572,7 +564,7 @@ function confirmReset() {
   closeModal();
   renderKickHabits();
   updateHome();
-  showToast("Clock reset. You can do this! 💪", "info", 5000);
+  showToast("Clock reset. You can do this! ", "info", 5000);
 }
 
 function closeModal() {
@@ -892,20 +884,11 @@ document.getElementById("btnClearKick").addEventListener("click", function() {
   document.getElementById("kName").value = "";
   document.getElementById("kCost").value = "";
   document.getElementById("kWhy").value = "";
-<<<<<<< HEAD
-  document.getElementById("currencyFields").classList.add("hidden"); // hide "show equivalent in"
-  setDefaultRelapseTime();
-});
-
-// show "Show Equivalent In" only when a cost is entered
-// the Cost Currency field is always visible now
-=======
   document.getElementById("currencyFields").classList.add("hidden");
   setDefaultRelapseTime();
 });
 
 // show currency fields only if the user enters a cost
->>>>>>> 60528bcb8f03f9dbdb7d21bea3d9be56ba36c543
 document.getElementById("kCost").addEventListener("input", function(e) {
   var val = parseFloat(e.target.value);
   var fields = document.getElementById("currencyFields");
