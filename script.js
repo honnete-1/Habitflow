@@ -937,4 +937,21 @@ function init() {
   console.log("HabitFlow loaded", appState.embraceHabits.length, "good habits,", appState.kickHabits.length, "bad habits");
 }
 
+
+function toggleSidebar() {
+  var sidebar = document.getElementById("sidebar");
+  var overlay = document.getElementById("sidebarOverlay");
+  sidebar.classList.toggle("open");
+  overlay.classList.toggle("open");
+}
+
+// close sidebar when a nav item is clicked on mobile
+document.querySelectorAll(".nav-item").forEach(function(btn) {
+  btn.addEventListener("click", function() {
+    if (window.innerWidth <= 700) {
+      toggleSidebar();
+    }
+  });
+});
+
 document.addEventListener("DOMContentLoaded", init);
