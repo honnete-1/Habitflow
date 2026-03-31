@@ -5,7 +5,6 @@
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
 ![Nginx](https://img.shields.io/badge/Nginx-009639?style=flat&logo=nginx&logoColor=white)
 ![HAProxy](https://img.shields.io/badge/HAProxy-Load%20Balancer-blue?style=flat)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat)
 
 HabitFlow is a personal habit tracking web app that helps users build good habits and break bad ones — with real API integrations that provide genuine value. Track nutrition, monitor sobriety time, calculate savings, and convert them to another currency, all from a clean and intuitive dashboard.
 
