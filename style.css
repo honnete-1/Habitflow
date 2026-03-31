@@ -67,14 +67,14 @@ body {
   display: flex;
 }
 
-/* ---- LAYOUT ---- */
+/*  LAYOUT  */
 .app-shell {
   display: flex;
   width: 100%;
   min-height: 100vh;
 }
 
-/* ---- SIDEBAR ---- */
+/*  SIDEBAR  */
 .sidebar {
   width: var(--sidebar-w);
   min-height: 100vh;
@@ -189,7 +189,7 @@ body {
   font-style: italic;
 }
 
-/* ---- MAIN CONTENT ---- */
+/*  MAIN CONTENT  */
 .main-content {
   margin-left: var(--sidebar-w);
   flex: 1;
@@ -201,7 +201,7 @@ body {
 .page { display: none; }
 .page.active { display: block; }
 
-/* ---- PAGE HEADERS ---- */
+/*  PAGE HEADERS  */
 .page-header {
   display: flex;
   align-items: flex-start;
@@ -266,7 +266,7 @@ body {
 
 .date-pill i { color: var(--green); }
 
-/* ---- CARDS ---- */
+/*  CARDS  */
 .card {
   background: var(--card-bg);
   border-radius: var(--card-radius);
@@ -469,7 +469,7 @@ body {
   font-size: 0.85rem;
 }
 
-/* ---- FORMS ---- */
+/*  FORMS  */
 .form-card { margin-bottom: 28px; }
 
 .form-card-title {
@@ -567,7 +567,7 @@ body {
 .day-btn:hover { border-color: var(--green); color: var(--green); }
 .day-btn.selected { background: var(--green); border-color: var(--green); color: white; }
 
-/* icon picker - scrollable because there are a lot of icons now */
+/* icon picker, it is scrollable because there are a lot of icons now */
 .icon-picker {
   display: flex;
   gap: 6px;
@@ -745,7 +745,7 @@ body {
 }
 .btn-reset:hover { background: var(--gold); color: white; }
 
-/* ---- HABIT LISTS ---- */
+/*  HABIT LISTS  */
 .list-area { }
 
 .list-label {
@@ -1146,7 +1146,7 @@ body {
   100% { background-position: -200% 0; }
 }
 
-/* ---- RESPONSIVE ---- */
+/*  RESPONSIVE  */
 @media (max-width: 1000px) {
   .home-row-1 { grid-template-columns: 1fr 1fr; }
   .balance-card { grid-column: 1 / -1; }

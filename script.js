@@ -1,4 +1,3 @@
-// script.js - main logic for HabitFlow app
 // I decided to keep everything in one file since the app is not that big
 
 // all my data lives here, i save it to localStorage whenever something changes
@@ -92,7 +91,7 @@ function fmt(amount, currency) {
   }).format(amount);
 }
 
-// security thing - escape user input before putting it into innerHTML
+// security thing to escape user input before putting it into innerHTML
 // otherwise someone could type <script> tags and break stuff
 function escHtml(str) {
   return String(str)
@@ -103,7 +102,7 @@ function escHtml(str) {
     .replace(/'/g, "&#039;");
 }
 
-// ---- TOAST NOTIFICATIONS ----
+// Toast notifications here
 // little popup messages at the bottom right
 
 var toastIcons = {
@@ -132,9 +131,9 @@ function showToast(msg, type, duration) {
 }
 
 
-// ---- USDA FOOD API ----
+//USDA FOOD API 
 // This API gives us real nutrition data (calories, protein etc)
-// Docs: https://fdc.nal.usda.gov/fdc-app.html
+// Docs here https://fdc.nal.usda.gov/fdc-app.html
 // You need an API key from: https://fdc.nal.usda.gov/api-key-signup.html
 
 async function verifyNutrition(query) {
@@ -214,11 +213,9 @@ async function verifyNutrition(query) {
 }
 
 
-// ---- FRANKFURTER CURRENCY API ----
+//  Frankfurter currency API 
 // Free API for exchange rates, no key needed
-// Used to show savings in a different currency
 // Docs: https://www.frankfurter.app/docs/
-
 // simple cache so we dont call the API every second
 // stores rates like { "USD-EUR": { rate: 0.92, time: 1234567 } }
 var rateCache = {};
@@ -275,7 +272,7 @@ var pendingResetId = null; // which kick habit is waiting to be reset
 var isAddingKick = false;  // lock to stop double-clicks during async API call
 
 
-// ---- NAVIGATION ----
+//  NAVIGATION 
 // switches between Home, Embrace, and Kick pages
 
 function navigateTo(pageId) {
@@ -470,8 +467,8 @@ async function addKickHabit() {
     return;
   }
 
-  var currFrom = document.getElementById("kCurrencyFrom").value; // always read - user picks their currency
-  var currTo = hasCost ? document.getElementById("kCurrencyTo").value : currFrom; // only convert if there's a cost
+  var currFrom = document.getElementById("kCurrencyFrom").value; // always read and user picks their currency
+  var currTo = hasCost ? document.getElementById("kCurrencyTo").value : currFrom; //only convert if there's a cost
 
   // only call the currency API if they actually entered a cost
   var exchangeRate = 1;
@@ -647,7 +644,7 @@ function renderKickHabits() {
 }
 
 
-// ---- LIVE CLOCK (updates every second) ----
+//  LIVE CLOCK (updates every second) 
 // this runs all the time and updates the sobriety timers
 // TODO: might be worth pausing this when the page is hidden to save resources
 
@@ -674,7 +671,7 @@ setInterval(function() {
 }, 1000);
 
 
-// ---- HOME PAGE ----
+//  HOME PAGE 
 
 function updateHome() {
   updateBalanceScore();
