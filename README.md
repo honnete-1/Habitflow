@@ -441,9 +441,9 @@ This confirms roundrobin is distributing traffic evenly between Web01 and Web02.
 
 ## Developer
 
-**Honnete Nishimwe**
-Student Email: h.nishimwe@alustudent.com
-Course: Web Infrastructure
-Assignment: Playing with APIs
-GitHub: github.com/honnete-1
-Date: February 2026
+**[Honnete Nishimwe]**
+[Student Email: h.nishimwe@alustudent.com]
+[Course: Web Infrastructure]
+[Assignment: Playing with APIs]
+[GitHub: github.com/honnete-1]
+[Date: February 2026]
