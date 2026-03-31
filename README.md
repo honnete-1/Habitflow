@@ -6,7 +6,7 @@
 ![Nginx](https://img.shields.io/badge/Nginx-009639?style=flat&logo=nginx&logoColor=white)
 ![HAProxy](https://img.shields.io/badge/HAProxy-Load%20Balancer-blue?style=flat)
 
-HabitFlow is a personal habit tracking web app that helps users build good habits and break bad ones — with real API integrations that provide genuine value. Track nutrition, monitor sobriety time, calculate savings, and convert them to another currency, all from a clean and intuitive dashboard.
+HabitFlow is a personal habit tracking web app that helps users build good habits and break bad ones, with real API integrations that provide genuine value. Track nutrition, monitor sobriety time, calculate savings, and convert them to another currency, all from a clean and intuitive dashboard.
 
 **Live Demo:** [https://habitflow.honnete.tech](https://habitflow.honnete.tech) &nbsp;|&nbsp; **Video Demo:** [Watch on Loom](https://www.loom.com/share/2373663a3247409a8673a6dd43897e8c)
 
